@@ -9,23 +9,17 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 
 require_once "../src/IncidenciaRepository.php";
 
-//REVISAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAR
-$accion = null;
 const ACCIONES_PERMITIDAS = ["crear", "cerrar", "reabrir", "eliminar"];
 
-if (isset($_POST["accion"])) {
-    $accion = $_POST["accion"];
-
-    //Si acción no está en el array de acciones permitidas
-    if (!in_array($accion, ACCIONES_PERMITIDAS)) {
-        //Te manda para index de cabeza
-        header("Location: index.php");
-        exit;
-    }
-
-    // creamos un objeto tipo incidencia para trabajar con el en cada accion
-    $repo = new IncidenciaRepository();
+if (!isset($_POST["accion"]) || !in_array($_POST["accion"], ACCIONES_PERMITIDAS)) {
+    header("Location: index.php");
+    exit;
 }
+
+$accion = $_POST["accion"];
+// creamos un objeto tipo incidencia para trabajar con el en cada accion
+$repo = new IncidenciaRepository();
+
 
 switch ($accion) {
     case 'crear':
@@ -116,3 +110,6 @@ switch ($accion) {
         exit;
         break;
 }
+
+header("Location: index.php");
+exit;
