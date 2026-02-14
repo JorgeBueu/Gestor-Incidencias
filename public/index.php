@@ -1,12 +1,32 @@
 <?php
 
+// 🎯 Si lo retomas ahora
+// Lo siguiente lógico sería:
+// Añadir filtro por estado
+// Añadir ordenación
+// Añadir fecha creación automática
+// Añadir validaciones más estrictas backend
+// Añadir paginación
+// Añadir usuarios
+// Eso ya lo convertiría en mini GLPI.
+
 require_once "../src/IncidenciaRepository.php";
 require_once "../helpers/flash.php";
 
 // creamos un objeto tipo incidencia
 $repo = new IncidenciaRepository();
-// llamamos al metodo findAll de incidencia que nos retorna un array con todas las incidencias que tenemos en la BD
-$incidencias = $repo->findAll();
+
+if (isset($_GET["estado"])) {
+    if ($_GET["estado"] == "Abierta") {
+        $incidencias = $repo->findByEstado("Abierta");
+    } else if ($_GET["estado"] == "Cerrada"){
+        $incidencias = $repo->findByEstado("Cerrada");
+    }
+} else {
+    // llamamos al metodo findAll de incidencia que nos retorna un array con todas las incidencias que tenemos en la BD
+    $incidencias = $repo->findAll();
+}
+
 // Llamamos al método que muestra las alertas de crear, cerrar, eliminar y reabrir las incidencias, con o sin éxito.
 $flash = getFlashMessage();
 ?>
@@ -32,6 +52,29 @@ $flash = getFlashMessage();
 
         <a href="crear.php" class="btn btn-primary mb-3">Nueva incidencia</a>
 
+        <!-- Tabla de filtros -->
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th colspan="3">Búsqueda por estado de incidencia</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <a href="index.php" class="btn btn-primary mb-3">Todas</a>
+                    </td>
+                    <td>
+                        <a href="index.php?estado=Abierta" class="btn btn-success mb-3">Abiertas</a>
+                    </td>
+                    <td>
+                        <a href="index.php?estado=Cerrada" class="btn btn-danger mb-3">Cerradas</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Tabla de incidencias -->
         <table class="table table-bordered table-striped"> <!-- Opcional: table-dark -->
             <thead>
                 <tr>

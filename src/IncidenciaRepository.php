@@ -5,7 +5,6 @@ require_once "../config/database.php";
 class IncidenciaRepository
 {
     /**
-     * Devuelve true si todo sale bien o un string con el error si algo falla
      * hace una consulta sql a la bd y devuelve un array con los resultados
      *
      * @return array con los datos de la consulta
@@ -18,6 +17,26 @@ class IncidenciaRepository
         $stmt = $conn->prepare($consulta);
         try {
             $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $ex) {
+            return "Error al recuperar las incidencias, error: " . $ex->getMessage();
+        }
+    }
+
+    /**
+     * hace una consulta sql a la bd filtrando por el estado que se le pasa por parametros
+     * devuelve un array con los resultados o una excepcion
+     *
+     * @return array con los datos de la consulta
+     * @return string si ocurre algún error
+     */
+    public function findByEstado(string $estado): array | string
+    {
+        $conn = getConnection();
+        $consulta = "SELECT * FROM incidencias WHERE estado = ?";
+        $stmt = $conn->prepare($consulta);
+        try {
+            $stmt->execute([$estado]);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $ex) {
             return "Error al recuperar las incidencias, error: " . $ex->getMessage();
