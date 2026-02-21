@@ -1,4 +1,5 @@
 🛠️ Gestor de Incidencias
+
 📌 Sobre el Proyecto
 Este es un sistema de gestión de tickets técnicos enfocado en la robustez del lado del servidor. El objetivo principal es aplicar patrones de diseño profesionales para garantizar un código escalable y limpio, alejándome del código "spaghetti" tradicional en PHP.
 
