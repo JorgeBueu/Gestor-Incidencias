@@ -41,13 +41,23 @@ El proyecto se encuentra en fase de desarrollo activo. Próximas implementacione
 📂 Estructura del Proyecto
 
 ├── config/
+
 │   ├── config.ini      # Parámetros de configuración
+
 │   └── database.php    # Conexión PDO a MySQL
+
 ├── helpers/
+
 │   └── flash.php       # Gestión de mensajes flash (errores/éxitos)
+
 ├── public/
+
 │   ├── index.php       # Dashboard y listado
+
 │   ├── crear.php       # Formulario de alta
+
 │   └── actions.php     # Procesamiento de lógica de cambio de estado
+
 ├── src/
+
 │   └── IncidenciaRepository.php  # Lógica de acceso a datos (Patrón Repository)
